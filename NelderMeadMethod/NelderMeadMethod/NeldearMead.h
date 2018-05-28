@@ -9,6 +9,7 @@ typedef exprtk::symbol_table<T> symbol_table_t;
 typedef exprtk::expression<T>     expression_t;
 typedef exprtk::parser<T>             parser_t;
 using namespace std;
+
 struct Polyhedron {
 	double *j;
 };
