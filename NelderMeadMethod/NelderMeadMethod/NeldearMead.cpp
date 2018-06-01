@@ -1,5 +1,5 @@
 #include "NeldearMead.h"
-/*
+
 double NeldearMead::Fuction(Polyhedron x) {
 	symbol_table_t symbol_table;
 	for (int i = 0; i < size; i++) {
@@ -101,4 +101,3 @@ void NeldearMead::ChangeH(int k) {
 		x[xh].j[i] = x[k].j[i];
 	}
 }
-*/

@@ -82,7 +82,7 @@ namespace NelderMeadMethod {
 	private: System::Windows::Forms::Label^  EditxLabel;
 
 
-			 int size;
+	int size;
 
 	private:
 		/// <summary>
@@ -436,7 +436,6 @@ namespace NelderMeadMethod {
 			// allXnSelectRadioButton
 			// 
 			this->allXnSelectRadioButton->AutoSize = true;
-			this->allXnSelectRadioButton->Enabled = false;
 			this->allXnSelectRadioButton->Location = System::Drawing::Point(528, 73);
 			this->allXnSelectRadioButton->Name = L"allXnSelectRadioButton";
 			this->allXnSelectRadioButton->Size = System::Drawing::Size(41, 22);
@@ -449,7 +448,6 @@ namespace NelderMeadMethod {
 			// 
 			this->everyXnSelectRadioButton->AutoSize = true;
 			this->everyXnSelectRadioButton->Checked = true;
-			this->everyXnSelectRadioButton->Enabled = false;
 			this->everyXnSelectRadioButton->Location = System::Drawing::Point(584, 73);
 			this->everyXnSelectRadioButton->Name = L"everyXnSelectRadioButton";
 			this->everyXnSelectRadioButton->Size = System::Drawing::Size(63, 22);
@@ -479,7 +477,6 @@ namespace NelderMeadMethod {
 			// 
 			// AddXButton
 			// 
-			this->AddXButton->Enabled = false;
 			this->AddXButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->AddXButton->Location = System::Drawing::Point(188, 103);
@@ -492,7 +489,6 @@ namespace NelderMeadMethod {
 			// 
 			// DelXButton
 			// 
-			this->DelXButton->Enabled = false;
 			this->DelXButton->Location = System::Drawing::Point(272, 103);
 			this->DelXButton->Name = L"DelXButton";
 			this->DelXButton->Size = System::Drawing::Size(63, 29);
@@ -504,7 +500,6 @@ namespace NelderMeadMethod {
 			// XResultListview
 			// 
 			this->XResultListview->Activation = System::Windows::Forms::ItemActivation::OneClick;
-			this->XResultListview->Enabled = false;
 			this->XResultListview->HoverSelection = true;
 			this->XResultListview->Location = System::Drawing::Point(165, 381);
 			this->XResultListview->Name = L"XResultListview";
@@ -592,5 +587,6 @@ namespace NelderMeadMethod {
 	private: System::Void DelXButton_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void allXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void everyXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
+	private: System::Void Clear();
 	};
 }
