@@ -1,18 +1,22 @@
 #include "NelderMeadForm.h"
 #include <string>
+#include <msclr\marshal_cppstd.h>
 
 System::Void NelderMeadMethod::NelderMeadForm::Clear() {
+	functionResultTextBox->Text="";
 	functionResultTextBox->Text = "";
 	sigmaResultTextBox->Text = "";
 	timeResultTextBox->Text = "";
 	iterResultTextBox->Text = "";
 	XTextbox->Text = "";
 	XResultListview->Items->Clear();
+	progressBar1->Visible = false;
+	progressBar1->MarqueeAnimationSpeed = 0;
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::focus(System::Object^ sender, System::EventArgs^ e) {
 	try {
-		this->everyXnSelectRadioButton->Enabled = true;
+		everyXnSelectRadioButton->Enabled = true;
 		try {
 			if (size  > Int32::Parse(sizeEditTextBox->Text)) {
 				XListView->Items->Clear();
@@ -35,114 +39,87 @@ System::Void NelderMeadMethod::NelderMeadForm::focus(System::Object^ sender, Sys
 			throw gcnew System::Exception("Минимальный размер для данной реализации метода равен 2");
 		}
 		else if (size > 6) {
-			this->allXnSelectRadioButton->Checked = true;
-			this->everyXnSelectRadioButton->Enabled = false;
+			allXnSelectRadioButton->Checked = true;
+			everyXnSelectRadioButton->Enabled = false;
 		}
 	}
 	catch (Exception^ err) {
 		MessageBox::Show(err->Message);
 	}
-
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::seachButton_Click(System::Object^  sender, System::EventArgs^  e) {
-	NeldearMead neldearMead;
+	if (!button) {
+	ds = DateTime::UtcNow;
 	Clear();
+	button = true;
+	cond = false;
+	progressBar1->Visible = true;
+	progressBar1->MarqueeAnimationSpeed = 25;
 	try {
-		neldearMead.function = "4*(x0-5)^2+(x1-6)^2";
-		neldearMead.size = size;
-		neldearMead.tol = Double::Parse(tolEditTextBox->Text);
-		neldearMead.alpha = Double::Parse(alphaEditTextBox->Text);
-		neldearMead.betha = Double::Parse(betaEditTextBox->Text);
-		neldearMead.gamma = Double::Parse(gammaEditTextBox->Text);
-
-		neldearMead.x = new Polyhedron[neldearMead.size + 5];
-		for (int k = 0; k < neldearMead.size + 6; k++) {
-			neldearMead.x[k].j = new double[neldearMead.size];
+		
+		msclr::interop::marshal_context context;
+		neldearMead->function = context.marshal_as<std::string>(functionEditTextBox->Text);
+		neldearMead->size = size;
+		neldearMead->tol = Double::Parse(tolEditTextBox->Text);
+		neldearMead->alpha = Double::Parse(alphaEditTextBox->Text);
+		neldearMead->betha = Double::Parse(betaEditTextBox->Text);
+		neldearMead->gamma = Double::Parse(gammaEditTextBox->Text);
+		neldearMead->iterlim = Int32::Parse(iterLimTextBox->Text);
+		neldearMead->timelim = Int32::Parse(timeLimEditTextBox->Text);
+		neldearMead->x = new Polyhedron[neldearMead->size + 5];
+		for (int k = 0; k < neldearMead->size + 6; k++) {
+			neldearMead->x[k].j = new double[neldearMead->size];
 		}
 		if (XListView->Items->Count == size && everyXnSelectRadioButton->Enabled == true) {
-			for (int i = 0; i < neldearMead.size; i++) {
-				neldearMead.x[0].j[i] = Double::Parse(XListView->Items[i]->SubItems[0]->Text);
-				for (int k = 1; k <= neldearMead.size; k++) {
-					for (int i = 0; i < neldearMead.size; i++) {
+			for (int i = 0; i < neldearMead->size; i++) {
+				neldearMead->x[0].j[i] = Double::Parse(XListView->Items[i]->SubItems[0]->Text);
+				for (int k = 1; k <= neldearMead->size; k++) {
+					for (int i = 0; i < neldearMead->size; i++) {
 						if (k == i) {
-							neldearMead.x[k].j[i] = neldearMead.x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) + k - 1));
+							neldearMead->x[k].j[i] = neldearMead->x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) + k - 1));
 						}
 						else {
-							neldearMead.x[k].j[i] = neldearMead.x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) - 1));
+							neldearMead->x[k].j[i] = neldearMead->x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) - 1));
 						}
 					}
 				}
 			}
-
-		/*	for (int i = 0; i <= neldearMead.size; i++) {
-				for (int j = 0; j < neldearMead.size; j++) {
-					
-				}
-			}*/
 		}
-		else if (XListView->Items->Count>0 && everyXnSelectRadioButton->Enabled == true) {
-			for (int i = 0; i < neldearMead.size; i++) {
-				neldearMead.x[0].j[i] = Double::Parse(XListView->Items[0]->SubItems[0]->Text);
+		else if (XListView->Items->Count == 1 && allXnSelectRadioButton->Enabled == true) {
+			for (int i = 0; i < neldearMead->size; i++) {
+				neldearMead->x[0].j[i] = Double::Parse(XListView->Items[0]->SubItems[0]->Text);
+				for (int k = 1; k <= neldearMead->size; k++) {
+					for (int i = 0; i < neldearMead->size; i++) {
+						if (k == i) {
+							neldearMead->x[k].j[i] = neldearMead->x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) + k - 1));
+						}
+						else {
+							neldearMead->x[k].j[i] = neldearMead->x[0].j[i] + (1 / (k * sqrt(2))*(sqrt(k + 1) - 1));
+						}
+					}
+				}
 			}
 		}
 		else {
 			throw gcnew System::Exception("Не заполнены значения Xn!");
 		}
-		int iter = 0;
-		double expt = 0;
-		do {
-			neldearMead.Max();
-			neldearMead.Min();
-			neldearMead.Center();
-			neldearMead.Reflection();
-			if (neldearMead.Fuction(neldearMead.x[neldearMead.size + 3]) <= neldearMead.Fuction(neldearMead.x[neldearMead.xl])) {
-				neldearMead.Stretching();
-				if (neldearMead.Fuction(neldearMead.x[neldearMead.size + 4]) < neldearMead.Fuction(neldearMead.x[neldearMead.xl])) {
-					neldearMead.ChangeH(neldearMead.size + 4);
-				}
-				else {
-					neldearMead.ChangeH((neldearMead.size + 3));
-				}
-			}
-			else {
-				if (neldearMead.Fuction(neldearMead.x[neldearMead.size + 3]) > neldearMead.Fuction(neldearMead.x[neldearMead.xg])) {
-					if (neldearMead.Fuction(neldearMead.x[neldearMead.size + 3]) > neldearMead.Fuction(neldearMead.x[neldearMead.xh])) {
-						neldearMead.Compression();
-						if (neldearMead.Fuction(neldearMead.x[neldearMead.size + 5]) > neldearMead.Fuction(neldearMead.x[neldearMead.xh])) {
-							neldearMead.Reduction();
-						}
-						else {
-							neldearMead.ChangeH((neldearMead.size + 5));
-						}
-					}
-					else {
-						neldearMead.ChangeH((neldearMead.size + 3));
-					}
-				}
-				else {
-					neldearMead.ChangeH((neldearMead.size + 3));
-				}
-			}
-			iter++;
-		} while (neldearMead.Epsilon() > neldearMead.tol && iter < 1000);
-		for (int i = 0; i < neldearMead.size; i++) {
-			XResultListview->Items->Add(neldearMead.x[neldearMead.xl].j[i].ToString());
-		}
-		functionResultTextBox->Text = neldearMead.Fuction(neldearMead.x[neldearMead.xl]).ToString();
-		sigmaResultTextBox->Text = neldearMead.Epsilon().ToString();
-		iterResultTextBox->Text = iter.ToString();
-
-
+		neldearMead->iter = 0;
+		backgroundWorker->RunWorkerAsync();
 	}
 	catch (System::Exception^ err) {
+		Clear();
 		MessageBox::Show(err->Message);
+		button = false;
+		backgroundWorker->CancelAsync();
+		}
 	}
-
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::CleanButton_Click(System::Object^  sender, System::EventArgs^  e) {
-
+	if (!button) {
+		Clear();
+	}	
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::AddXButton_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -196,4 +173,34 @@ System::Void NelderMeadMethod::NelderMeadForm::allXnSelectRadioButton_CheckedCha
 System::Void NelderMeadMethod::NelderMeadForm::everyXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	XTextbox->Text = "";
 	XListView->Items->Clear();
+}
+
+System::Void NelderMeadMethod::NelderMeadForm::backgroundWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+	try {
+		do {
+			neldearMead->Method();
+		} while (neldearMead->Epsilon() > neldearMead->tol && neldearMead->iter <neldearMead->iterlim && TimeSpan(DateTime::UtcNow - ds).Seconds<neldearMead->timelim);
+		cond = true;
+	}
+	catch (System::Exception^ err) {
+		MessageBox::Show(err->Message);
+	}
+	finally{
+		button = false;
+	}
+
+}
+
+System::Void NelderMeadMethod::NelderMeadForm::backgroundWorker_RunWorkerComleted(System::Object^  sender, System::ComponentModel::RunWorkerCompletedEventArgs^  e) {
+	if (cond) {
+		for (int i = 0; i < neldearMead->size; i++) {
+			XResultListview->Items->Add(neldearMead->x[neldearMead->xl].j[i].ToString());
+		}
+		functionResultTextBox->Text = neldearMead->Fuction(neldearMead->x[neldearMead->xl]).ToString();
+		sigmaResultTextBox->Text = neldearMead->Epsilon().ToString();
+		iterResultTextBox->Text = neldearMead->iter.ToString();
+		timeResultTextBox->Text = TimeSpan(DateTime::UtcNow - ds).Seconds.ToString();
+	}
+	button = false;
+	progressBar1->Visible = false;
 }

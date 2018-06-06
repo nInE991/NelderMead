@@ -3,15 +3,14 @@
 double NeldearMead::Fuction(Polyhedron x) {
 	symbol_table_t symbol_table;
 	for (int i = 0; i < size; i++) {
-		symbol_table.add_variable(string("x" + to_string(i)), x.j[i]);
+		symbol_table.add_variable(string("x" + to_string(i+1)), x.j[i]);
 	}
 	expression_t expression;
 	expression.register_symbol_table(symbol_table);
 	parser_t parser;
 	if (!parser.compile(function, expression))
 	{
-		printf("Compilation error...\n");
-		system("pause");
+		throw gcnew System::Exception("Не корректный ввод функции!");
 	}
 	return static_cast<double>(expression.value());
 }
@@ -100,4 +99,40 @@ void NeldearMead::ChangeH(int k) {
 	for (int i = 0; i < size; i++) {
 		x[xh].j[i] = x[k].j[i];
 	}
+}
+
+void NeldearMead::Method() {
+		Max();
+		Min();
+		Center();
+		Reflection();
+		if (Fuction(x[size + 3]) <= Fuction(x[xl])) {
+			Stretching();
+			if (Fuction(x[size + 4]) < Fuction(x[xl])) {
+				ChangeH(size + 4);
+			}
+			else {
+				ChangeH((size + 3));
+			}
+		}
+		else {
+			if (Fuction(x[size + 3]) > Fuction(x[xg])) {
+				if (Fuction(x[size + 3]) > Fuction(x[xh])) {
+					Compression();
+					if (Fuction(x[size + 5]) > Fuction(x[xh])) {
+						Reduction();
+					}
+					else {
+						ChangeH((size + 5));
+					}
+				}
+				else {
+					ChangeH((size + 3));
+				}
+			}
+			else {
+				ChangeH((size + 3));
+			}
+		}
+		iter++;
 }

@@ -9,7 +9,7 @@ namespace NelderMeadMethod {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::Threading;
 	/// <summary>
 	/// Сводка для NelderMeadForm
 	/// </summary>
@@ -37,6 +37,7 @@ namespace NelderMeadMethod {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::Label^  functionEditLabel;
 	private: System::Windows::Forms::Label^  XnEditLabel;
 	private: System::Windows::Forms::Label^  sizeEditLabel;
@@ -57,6 +58,7 @@ namespace NelderMeadMethod {
 	private: System::Windows::Forms::TextBox^  iterLimTextBox;
 	private: System::Windows::Forms::TextBox^  timeLimEditTextBox;
 	private: System::Windows::Forms::TextBox^  functionResultTextBox;
+
 
 	private: System::Windows::Forms::Label^  xResultLabel;
 	private: System::Windows::Forms::Label^  functionResultLabel;
@@ -80,9 +82,14 @@ namespace NelderMeadMethod {
 	private: System::Windows::Forms::ListView^  XResultListview;
 	private: System::Windows::Forms::Label^  XLabel;
 	private: System::Windows::Forms::Label^  EditxLabel;
-
-
+	bool cond = false;
+	bool button = false;
 	int size;
+	DateTime ds;
+	static NeldearMead *neldearMead = new NeldearMead;
+	private: System::Windows::Forms::ProgressBar^  progressBar1;
+	private: System::ComponentModel::BackgroundWorker^  backgroundWorker;
+
 
 	private:
 		/// <summary>
@@ -134,6 +141,8 @@ namespace NelderMeadMethod {
 			this->XResultListview = (gcnew System::Windows::Forms::ListView());
 			this->XLabel = (gcnew System::Windows::Forms::Label());
 			this->EditxLabel = (gcnew System::Windows::Forms::Label());
+			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
+			this->backgroundWorker = (gcnew System::ComponentModel::BackgroundWorker());
 			this->SuspendLayout();
 			// 
 			// functionEditLabel
@@ -313,7 +322,7 @@ namespace NelderMeadMethod {
 			this->timeLimEditTextBox->Name = L"timeLimEditTextBox";
 			this->timeLimEditTextBox->Size = System::Drawing::Size(175, 24);
 			this->timeLimEditTextBox->TabIndex = 13;
-			this->timeLimEditTextBox->Text = L"10";
+			this->timeLimEditTextBox->Text = L"100";
 			// 
 			// functionResultTextBox
 			// 
@@ -413,7 +422,7 @@ namespace NelderMeadMethod {
 			// 
 			// seachButton
 			// 
-			this->seachButton->Location = System::Drawing::Point(211, 306);
+			this->seachButton->Location = System::Drawing::Point(211, 328);
 			this->seachButton->Margin = System::Windows::Forms::Padding(4);
 			this->seachButton->Name = L"seachButton";
 			this->seachButton->Size = System::Drawing::Size(150, 39);
@@ -424,7 +433,7 @@ namespace NelderMeadMethod {
 			// 
 			// CleanButton
 			// 
-			this->CleanButton->Location = System::Drawing::Point(390, 306);
+			this->CleanButton->Location = System::Drawing::Point(390, 328);
 			this->CleanButton->Margin = System::Windows::Forms::Padding(4);
 			this->CleanButton->Name = L"CleanButton";
 			this->CleanButton->Size = System::Drawing::Size(120, 39);
@@ -527,11 +536,28 @@ namespace NelderMeadMethod {
 			this->EditxLabel->TabIndex = 0;
 			this->EditxLabel->Text = L"Edit X";
 			// 
+			// progressBar1
+			// 
+			this->progressBar1->Location = System::Drawing::Point(211, 290);
+			this->progressBar1->MarqueeAnimationSpeed = 0;
+			this->progressBar1->Name = L"progressBar1";
+			this->progressBar1->Size = System::Drawing::Size(385, 23);
+			this->progressBar1->Style = System::Windows::Forms::ProgressBarStyle::Marquee;
+			this->progressBar1->TabIndex = 61;
+			this->progressBar1->Visible = false;
+			// 
+			// backgroundWorker
+			// 
+			this->backgroundWorker->WorkerSupportsCancellation = true;
+			this->backgroundWorker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &NelderMeadForm::backgroundWorker_DoWork);
+			this->backgroundWorker->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &NelderMeadForm::backgroundWorker_RunWorkerComleted);
+			// 
 			// NelderMeadForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(744, 587);
+			this->Controls->Add(this->progressBar1);
 			this->Controls->Add(this->EditxLabel);
 			this->Controls->Add(this->XLabel);
 			this->Controls->Add(this->XResultListview);
@@ -587,6 +613,8 @@ namespace NelderMeadMethod {
 	private: System::Void DelXButton_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void allXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void everyXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void Clear();
-	};
+	public: System::Void  Clear();
+	private: System::Void backgroundWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e); 
+	private: System::Void backgroundWorker_RunWorkerComleted(System::Object^  sender, System::ComponentModel::RunWorkerCompletedEventArgs^  e);
+};
 }
