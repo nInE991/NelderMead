@@ -162,24 +162,24 @@ namespace NelderMeadMethod {
 			this->XnEditLabel->AutoSize = true;
 			this->XnEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->XnEditLabel->Location = System::Drawing::Point(123, 179);
+			this->XnEditLabel->Location = System::Drawing::Point(106, 179);
 			this->XnEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->XnEditLabel->Name = L"XnEditLabel";
-			this->XnEditLabel->Size = System::Drawing::Size(26, 18);
+			this->XnEditLabel->Size = System::Drawing::Size(44, 18);
 			this->XnEditLabel->TabIndex = 33;
-			this->XnEditLabel->Text = L"Xn";
+			this->XnEditLabel->Text = L"Xn(0)";
 			// 
 			// sizeEditLabel
 			// 
 			this->sizeEditLabel->AutoSize = true;
 			this->sizeEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->sizeEditLabel->Location = System::Drawing::Point(441, 40);
+			this->sizeEditLabel->Location = System::Drawing::Point(398, 40);
 			this->sizeEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->sizeEditLabel->Name = L"sizeEditLabel";
-			this->sizeEditLabel->Size = System::Drawing::Size(37, 18);
+			this->sizeEditLabel->Size = System::Drawing::Size(79, 18);
 			this->sizeEditLabel->TabIndex = 32;
-			this->sizeEditLabel->Text = L"Size";
+			this->sizeEditLabel->Text = L"Dimension";
 			// 
 			// alphaEditLabel
 			// 
@@ -341,9 +341,9 @@ namespace NelderMeadMethod {
 			this->xResultLabel->Location = System::Drawing::Point(123, 418);
 			this->xResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->xResultLabel->Name = L"xResultLabel";
-			this->xResultLabel->Size = System::Drawing::Size(26, 18);
+			this->xResultLabel->Size = System::Drawing::Size(24, 18);
 			this->xResultLabel->TabIndex = 24;
-			this->xResultLabel->Text = L"Xn";
+			this->xResultLabel->Text = L"X*";
 			// 
 			// functionResultLabel
 			// 
@@ -353,9 +353,9 @@ namespace NelderMeadMethod {
 			this->functionResultLabel->Location = System::Drawing::Point(56, 495);
 			this->functionResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->functionResultLabel->Name = L"functionResultLabel";
-			this->functionResultLabel->Size = System::Drawing::Size(93, 18);
+			this->functionResultLabel->Size = System::Drawing::Size(91, 18);
 			this->functionResultLabel->TabIndex = 23;
-			this->functionResultLabel->Text = L"Function(Xn)";
+			this->functionResultLabel->Text = L"Function(X*)";
 			// 
 			// sigmaResultLabel
 			// 
@@ -374,12 +374,12 @@ namespace NelderMeadMethod {
 			this->iterResultLabel->AutoSize = true;
 			this->iterResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->iterResultLabel->Location = System::Drawing::Point(418, 418);
+			this->iterResultLabel->Location = System::Drawing::Point(363, 418);
 			this->iterResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->iterResultLabel->Name = L"iterResultLabel";
-			this->iterResultLabel->Size = System::Drawing::Size(60, 18);
+			this->iterResultLabel->Size = System::Drawing::Size(129, 18);
 			this->iterResultLabel->TabIndex = 23;
-			this->iterResultLabel->Text = L"Iteration";
+			this->iterResultLabel->Text = L"NumberOfIteration";
 			// 
 			// sigmaResultTextBox
 			// 
@@ -413,12 +413,12 @@ namespace NelderMeadMethod {
 			this->timeResultLabel->AutoSize = true;
 			this->timeResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->timeResultLabel->Location = System::Drawing::Point(429, 384);
+			this->timeResultLabel->Location = System::Drawing::Point(381, 384);
 			this->timeResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->timeResultLabel->Name = L"timeResultLabel";
-			this->timeResultLabel->Size = System::Drawing::Size(49, 18);
+			this->timeResultLabel->Size = System::Drawing::Size(94, 18);
 			this->timeResultLabel->TabIndex = 17;
-			this->timeResultLabel->Text = L"Times";
+			this->timeResultLabel->Text = L"ElapsedTime";
 			// 
 			// seachButton
 			// 
@@ -427,7 +427,7 @@ namespace NelderMeadMethod {
 			this->seachButton->Name = L"seachButton";
 			this->seachButton->Size = System::Drawing::Size(150, 39);
 			this->seachButton->TabIndex = 15;
-			this->seachButton->Text = L"SeachButton";
+			this->seachButton->Text = L"Run";
 			this->seachButton->UseVisualStyleBackColor = true;
 			this->seachButton->Click += gcnew System::EventHandler(this, &NelderMeadForm::seachButton_Click);
 			// 
@@ -438,7 +438,7 @@ namespace NelderMeadMethod {
 			this->CleanButton->Name = L"CleanButton";
 			this->CleanButton->Size = System::Drawing::Size(120, 39);
 			this->CleanButton->TabIndex = 16;
-			this->CleanButton->Text = L"CleanButton";
+			this->CleanButton->Text = L"Clear Output";
 			this->CleanButton->UseVisualStyleBackColor = true;
 			this->CleanButton->Click += gcnew System::EventHandler(this, &NelderMeadForm::CleanButton_Click);
 			// 
@@ -520,11 +520,11 @@ namespace NelderMeadMethod {
 			// XLabel
 			// 
 			this->XLabel->AutoSize = true;
-			this->XLabel->Location = System::Drawing::Point(131, 75);
+			this->XLabel->Location = System::Drawing::Point(110, 75);
 			this->XLabel->Name = L"XLabel";
-			this->XLabel->Size = System::Drawing::Size(18, 18);
+			this->XLabel->Size = System::Drawing::Size(44, 18);
 			this->XLabel->TabIndex = 1;
-			this->XLabel->Text = L"X";
+			this->XLabel->Text = L"Xn(0)";
 			// 
 			// EditxLabel
 			// 
