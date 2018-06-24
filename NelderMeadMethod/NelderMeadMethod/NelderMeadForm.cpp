@@ -29,7 +29,7 @@ System::Void NelderMeadMethod::NelderMeadForm::focus(System::Object^ sender, Sys
 	    }
 		
 		if (size <= 0) {
-			XTextbox->Text = "";
+			XTextbox->Text = ""; 
 			XListView->Items->Clear();
 			throw gcnew System::Exception("Не допустимый размер");
 		}
@@ -118,7 +118,15 @@ System::Void NelderMeadMethod::NelderMeadForm::seachButton_Click(System::Object^
 
 System::Void NelderMeadMethod::NelderMeadForm::CleanButton_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (!button) {
-		Clear();
+		functionResultTextBox->Text = "";
+		functionResultTextBox->Text = "";
+		sigmaResultTextBox->Text = "";
+		timeResultTextBox->Text = "";
+		iterResultTextBox->Text = "";
+		XTextbox->Text = "";
+		XResultListview->Items->Clear();
+		progressBar1->Visible = false;
+		progressBar1->MarqueeAnimationSpeed = 0;
 	}	
 }
 
@@ -179,7 +187,7 @@ System::Void NelderMeadMethod::NelderMeadForm::backgroundWorker_DoWork(System::O
 	try {
 		do {
 			neldearMead->Method();
-		} while (neldearMead->Epsilon() > neldearMead->tol && neldearMead->iter <neldearMead->iterlim && TimeSpan(DateTime::UtcNow - ds).Seconds<neldearMead->timelim);
+		} while (neldearMead->Epsilon() < neldearMead->tol && neldearMead->iter <neldearMead->iterlim && TimeSpan(DateTime::UtcNow - ds).Seconds<neldearMead->timelim);
 		cond = true;
 	}
 	catch (System::Exception^ err) {
