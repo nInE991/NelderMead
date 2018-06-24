@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "NeldearMead.h"
 
 namespace NelderMeadMethod {
@@ -11,7 +11,7 @@ namespace NelderMeadMethod {
 	using namespace System::Drawing;
 	using namespace System::Threading;
 	/// <summary>
-	/// Сводка для NelderMeadForm
+	/// РЎРІРѕРґРєР° РґР»СЏ NelderMeadForm
 	/// </summary>
 
 	public ref class NelderMeadForm : public System::Windows::Forms::Form
@@ -22,13 +22,13 @@ namespace NelderMeadMethod {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктор
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~NelderMeadForm()
 		{
@@ -89,21 +89,26 @@ namespace NelderMeadMethod {
 	static NeldearMead *neldearMead = new NeldearMead;
 	private: System::Windows::Forms::ProgressBar^  progressBar1;
 	private: System::ComponentModel::BackgroundWorker^  backgroundWorker;
+	private: System::Windows::Forms::ToolTip^  toolTip;
+	private: System::ComponentModel::IContainer^  components;
+
+
 
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->functionEditLabel = (gcnew System::Windows::Forms::Label());
 			this->XnEditLabel = (gcnew System::Windows::Forms::Label());
 			this->sizeEditLabel = (gcnew System::Windows::Forms::Label());
@@ -143,6 +148,7 @@ namespace NelderMeadMethod {
 			this->EditxLabel = (gcnew System::Windows::Forms::Label());
 			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
 			this->backgroundWorker = (gcnew System::ComponentModel::BackgroundWorker());
+			this->toolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->SuspendLayout();
 			// 
 			// functionEditLabel
@@ -278,6 +284,7 @@ namespace NelderMeadMethod {
 			this->alphaEditTextBox->Size = System::Drawing::Size(175, 24);
 			this->alphaEditTextBox->TabIndex = 10;
 			this->alphaEditTextBox->Text = L"1";
+			this->toolTip->SetToolTip(this->alphaEditTextBox, L"recommended alpha values 0 <alphaв‰¤1");
 			// 
 			// betaEditTextBox
 			// 
@@ -287,6 +294,7 @@ namespace NelderMeadMethod {
 			this->betaEditTextBox->Size = System::Drawing::Size(175, 24);
 			this->betaEditTextBox->TabIndex = 11;
 			this->betaEditTextBox->Text = L"0,5";
+			this->toolTip->SetToolTip(this->betaEditTextBox, L"recommended beta values 0,4в‰¤betaв‰¤0,6 ");
 			// 
 			// gammaEditTextBox
 			// 
@@ -296,6 +304,7 @@ namespace NelderMeadMethod {
 			this->gammaEditTextBox->Size = System::Drawing::Size(175, 24);
 			this->gammaEditTextBox->TabIndex = 12;
 			this->gammaEditTextBox->Text = L"2";
+			this->toolTip->SetToolTip(this->gammaEditTextBox, L"recommended gamma values 2,8в‰¤gammaв‰¤3,0 ");
 			// 
 			// tolEditTextBox
 			// 
@@ -598,6 +607,8 @@ namespace NelderMeadMethod {
 			this->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->Margin = System::Windows::Forms::Padding(4);
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"NelderMeadForm";
 			this->Text = L"NelderMeadForm";
 			this->ResumeLayout(false);
