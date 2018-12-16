@@ -92,6 +92,8 @@ namespace NelderMeadMethod {
 	private: System::ComponentModel::BackgroundWorker^  backgroundWorker;
 	private: System::Windows::Forms::ToolTip^  toolTip;
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  X;
+
 
 
 	private: System::ComponentModel::IContainer^  components;
@@ -113,6 +115,7 @@ namespace NelderMeadMethod {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::Windows::Forms::ListViewItem^  listViewItem1 = (gcnew System::Windows::Forms::ListViewItem(L"xlistView"));
 			this->functionEditLabel = (gcnew System::Windows::Forms::Label());
 			this->XnEditLabel = (gcnew System::Windows::Forms::Label());
 			this->sizeEditLabel = (gcnew System::Windows::Forms::Label());
@@ -148,6 +151,7 @@ namespace NelderMeadMethod {
 			this->backgroundWorker = (gcnew System::ComponentModel::BackgroundWorker());
 			this->toolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->X = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -266,6 +270,7 @@ namespace NelderMeadMethod {
 			this->functionEditTextBox->Name = L"functionEditTextBox";
 			this->functionEditTextBox->Size = System::Drawing::Size(196, 24);
 			this->functionEditTextBox->TabIndex = 0;
+			this->functionEditTextBox->Text = L"4*(x1-5)^2+(x2-6)^2";
 			// 
 			// sizeEditTextBox
 			// 
@@ -274,6 +279,7 @@ namespace NelderMeadMethod {
 			this->sizeEditTextBox->Name = L"sizeEditTextBox";
 			this->sizeEditTextBox->Size = System::Drawing::Size(175, 24);
 			this->sizeEditTextBox->TabIndex = 1;
+			this->sizeEditTextBox->Text = L"2";
 			this->sizeEditTextBox->Leave += gcnew System::EventHandler(this, &NelderMeadForm::focus);
 			// 
 			// alphaEditTextBox
@@ -341,6 +347,7 @@ namespace NelderMeadMethod {
 			this->functionResultTextBox->ReadOnly = true;
 			this->functionResultTextBox->Size = System::Drawing::Size(196, 24);
 			this->functionResultTextBox->TabIndex = 18;
+			this->functionResultTextBox->Text = L"Function(X*)";
 			// 
 			// xResultLabel
 			// 
@@ -398,6 +405,7 @@ namespace NelderMeadMethod {
 			this->sigmaResultTextBox->ReadOnly = true;
 			this->sigmaResultTextBox->Size = System::Drawing::Size(196, 24);
 			this->sigmaResultTextBox->TabIndex = 20;
+			this->sigmaResultTextBox->Text = L"Sigma";
 			// 
 			// iterResultTextBox
 			// 
@@ -407,6 +415,7 @@ namespace NelderMeadMethod {
 			this->iterResultTextBox->ReadOnly = true;
 			this->iterResultTextBox->Size = System::Drawing::Size(175, 24);
 			this->iterResultTextBox->TabIndex = 22;
+			this->iterResultTextBox->Text = L"NumberOfIteration";
 			// 
 			// timeResultTextBox
 			// 
@@ -416,6 +425,7 @@ namespace NelderMeadMethod {
 			this->timeResultTextBox->ReadOnly = true;
 			this->timeResultTextBox->Size = System::Drawing::Size(175, 24);
 			this->timeResultTextBox->TabIndex = 21;
+			this->timeResultTextBox->Text = L"ElapsedTime";
 			// 
 			// timeResultLabel
 			// 
@@ -479,6 +489,7 @@ namespace NelderMeadMethod {
 			// 
 			this->XResultListview->Activation = System::Windows::Forms::ItemActivation::OneClick;
 			this->XResultListview->HoverSelection = true;
+			this->XResultListview->Items->AddRange(gcnew cli::array< System::Windows::Forms::ListViewItem^  >(1) { listViewItem1 });
 			this->XResultListview->Location = System::Drawing::Point(165, 349);
 			this->XResultListview->Name = L"XResultListview";
 			this->XResultListview->Size = System::Drawing::Size(196, 97);
@@ -507,11 +518,17 @@ namespace NelderMeadMethod {
 			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->AllowUserToDeleteRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(165, 73);
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(1) { this->X });
+			this->dataGridView1->Location = System::Drawing::Point(165, 77);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->Size = System::Drawing::Size(196, 97);
 			this->dataGridView1->TabIndex = 62;
 			this->dataGridView1->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &NelderMeadForm::dataGridView1_CellValueChanged);
+			// 
+			// X
+			// 
+			this->X->HeaderText = L"X";
+			this->X->Name = L"X";
 			// 
 			// NelderMeadForm
 			// 
@@ -582,5 +599,6 @@ private: System::Void dataGridView1_CellValueChanged(System::Object^  sender, Sy
 		MessageBox::Show(err->Message);
 		 }
 }
+
 };
 }
