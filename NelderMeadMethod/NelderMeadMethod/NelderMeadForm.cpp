@@ -8,7 +8,7 @@ System::Void NelderMeadMethod::NelderMeadForm::Clear() {
 	sigmaResultTextBox->Text = "";
 	timeResultTextBox->Text = "";
 	iterResultTextBox->Text = "";
-	XTextbox->Text = "";
+	//XTextbox->Text = "";
 	XResultListview->Items->Clear();
 	progressBar1->Visible = false;
 	progressBar1->MarqueeAnimationSpeed = 0;
@@ -17,30 +17,42 @@ System::Void NelderMeadMethod::NelderMeadForm::Clear() {
 System::Void NelderMeadMethod::NelderMeadForm::focus(System::Object^ sender, System::EventArgs^ e) {
 	try {
 		everyXnSelectRadioButton->Enabled = true;
+		editDataGrigView = 0;
 		try {
-			if (size  > Int32::Parse(sizeEditTextBox->Text)) {
-				XListView->Items->Clear();
-			}
+			
+			dataGridView1->Columns->Clear();
 			size = Int32::Parse(sizeEditTextBox->Text);
+			dataGridView1->Columns->Add("X","X");
+
 		}
 		catch (System::Exception^ ferr) {
-			XListView->Items->Clear();
+			dataGridView1->Columns->Clear();
 			throw gcnew System::Exception("Некорректный ввод размера");
 	    }
 		
 		if (size <= 0) {
-			XTextbox->Text = ""; 
-			XListView->Items->Clear();
+			dataGridView1->Columns->Clear();
 			throw gcnew System::Exception("Не допустимый размер");
 		}
 		else if (size < 2) {
-			XTextbox->Text = "";
-			XListView->Items->Clear();
+			dataGridView1->Columns->Clear();
 			throw gcnew System::Exception("Минимальный размер для данной реализации метода равен 2");
 		}
 		else if (size > 6) {
 			allXnSelectRadioButton->Checked = true;
 			everyXnSelectRadioButton->Enabled = false;
+			dataGridView1->Rows->Add("");
+		}
+		else {
+			if (allXnSelectRadioButton->Checked == true) {
+					dataGridView1->Rows->Add("");
+			}
+			else {
+				for (int i = 0; i <size; i++) {
+					dataGridView1->Rows->Add("");
+				}
+			}
+			
 		}
 	}
 	catch (Exception^ err) {
@@ -49,6 +61,7 @@ System::Void NelderMeadMethod::NelderMeadForm::focus(System::Object^ sender, Sys
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::seachButton_Click(System::Object^  sender, System::EventArgs^  e) {
+
 	if (!button) {
 	ds = DateTime::UtcNow;
 	Clear();
@@ -71,9 +84,9 @@ System::Void NelderMeadMethod::NelderMeadForm::seachButton_Click(System::Object^
 		for (int k = 0; k < neldearMead->size + 6; k++) {
 			neldearMead->x[k].j = new double[neldearMead->size];
 		}
-		if (XListView->Items->Count == size && everyXnSelectRadioButton->Enabled == true) {
+		if (editDataGrigView == size && everyXnSelectRadioButton->Enabled == true) {
 			for (int i = 0; i < neldearMead->size; i++) {
-				neldearMead->x[0].j[i] = Double::Parse(XListView->Items[i]->SubItems[0]->Text);
+				neldearMead->x[0].j[i] = Double::Parse(dataGridView1->Rows[i]->Cells[0]->Value->ToString());
 				for (int k = 1; k <= neldearMead->size; k++) {
 					for (int i = 0; i < neldearMead->size; i++) {
 						if (k == i) {
@@ -86,9 +99,9 @@ System::Void NelderMeadMethod::NelderMeadForm::seachButton_Click(System::Object^
 				}
 			}
 		}
-		else if (XListView->Items->Count == 1 && allXnSelectRadioButton->Enabled == true) {
+		else if (editDataGrigView == 1 && allXnSelectRadioButton->Enabled == true) {
 			for (int i = 0; i < neldearMead->size; i++) {
-				neldearMead->x[0].j[i] = Double::Parse(XListView->Items[0]->SubItems[0]->Text);
+				neldearMead->x[0].j[i] = Double::Parse(dataGridView1->Rows[0]->Cells[0]->Value->ToString());
 				for (int k = 1; k <= neldearMead->size; k++) {
 					for (int i = 0; i < neldearMead->size; i++) {
 						if (k == i) {
@@ -123,64 +136,20 @@ System::Void NelderMeadMethod::NelderMeadForm::CleanButton_Click(System::Object^
 		sigmaResultTextBox->Text = "";
 		timeResultTextBox->Text = "";
 		iterResultTextBox->Text = "";
-		XTextbox->Text = "";
 		XResultListview->Items->Clear();
 		progressBar1->Visible = false;
 		progressBar1->MarqueeAnimationSpeed = 0;
 	}	
 }
 
-System::Void NelderMeadMethod::NelderMeadForm::AddXButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (XTextbox->Text != ""&& XListView->Items->Count < size && everyXnSelectRadioButton->Checked == true) {
-		double item;
-		try {
-			item = double::Parse(XTextbox->Text);
-			XListView->Items->Add(item.ToString());
-			//timeResultTextBox->Text = XListView->Items[0]->SubItems[0]->Text;
-		}
-		catch (System::Exception^ err) {
-			MessageBox::Show(err->Message);
-		}
-	}
-	else if (XTextbox->Text != "" && XListView->Items->Count < 1 && allXnSelectRadioButton->Checked == true) {
-		double item;
-		try {
-			item = double::Parse(XTextbox->Text);
-			XListView->Items->Add(item.ToString());
-		}
-		catch (System::Exception^ err) {
-			MessageBox::Show(err->Message);
-		}
-	}
-	else if (sizeEditTextBox->Text=="") {
-		MessageBox::Show("Заполните размер!");
-	}
-	else if ((XListView->Items->Count >= size&&everyXnSelectRadioButton->Checked == true)||(XListView->Items->Count == 1 && allXnSelectRadioButton->Checked == true)) {
-		MessageBox::Show("Ячейки заполнены!");
-	}
-	else if (XTextbox->Text == "") {
-		MessageBox::Show("Введите значение!");
-	}
-	XTextbox->Text = "";
-}
-
-System::Void NelderMeadMethod::NelderMeadForm::DelXButton_Click(System::Object^ sender, System::EventArgs^ e) {
-	try {
-		XListView->Items->Remove(XListView->SelectedItems[0]);
-	}
-	catch (Exception^ err) {
-		MessageBox::Show("Не выбран элемент для удаления!");
-	}
-}
 
 System::Void NelderMeadMethod::NelderMeadForm::allXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	XTextbox->Text = "";
-	XListView->Items->Clear();
+	focus(sender,  e);
+
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::everyXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	XTextbox->Text = "";
-	XListView->Items->Clear();
+	focus(sender, e);
 }
 
 System::Void NelderMeadMethod::NelderMeadForm::backgroundWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {

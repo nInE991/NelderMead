@@ -73,23 +73,27 @@ namespace NelderMeadMethod {
 	private: System::Windows::Forms::Button^  CleanButton;
 	private: System::Windows::Forms::RadioButton^  allXnSelectRadioButton;
 	private: System::Windows::Forms::RadioButton^  everyXnSelectRadioButton;
-	private: System::Windows::Forms::ListView^  XListView;
-	private: System::Windows::Forms::TextBox^  XTextbox;
-	private: System::Windows::Forms::Button^  AddXButton;
-	private: System::Windows::Forms::Button^  DelXButton;
+
+
+
+
 
 
 	private: System::Windows::Forms::ListView^  XResultListview;
-	private: System::Windows::Forms::Label^  XLabel;
-	private: System::Windows::Forms::Label^  EditxLabel;
+
+
 	bool cond = false;
 	bool button = false;
 	int size;
+	int editDataGrigView = 0;
 	DateTime ds;
 	static NeldearMead *neldearMead = new NeldearMead;
 	private: System::Windows::Forms::ProgressBar^  progressBar1;
 	private: System::ComponentModel::BackgroundWorker^  backgroundWorker;
 	private: System::Windows::Forms::ToolTip^  toolTip;
+	private: System::Windows::Forms::DataGridView^  dataGridView1;
+
+
 	private: System::ComponentModel::IContainer^  components;
 
 
@@ -139,16 +143,12 @@ namespace NelderMeadMethod {
 			this->CleanButton = (gcnew System::Windows::Forms::Button());
 			this->allXnSelectRadioButton = (gcnew System::Windows::Forms::RadioButton());
 			this->everyXnSelectRadioButton = (gcnew System::Windows::Forms::RadioButton());
-			this->XListView = (gcnew System::Windows::Forms::ListView());
-			this->XTextbox = (gcnew System::Windows::Forms::TextBox());
-			this->AddXButton = (gcnew System::Windows::Forms::Button());
-			this->DelXButton = (gcnew System::Windows::Forms::Button());
 			this->XResultListview = (gcnew System::Windows::Forms::ListView());
-			this->XLabel = (gcnew System::Windows::Forms::Label());
-			this->EditxLabel = (gcnew System::Windows::Forms::Label());
 			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
 			this->backgroundWorker = (gcnew System::ComponentModel::BackgroundWorker());
 			this->toolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
+			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// functionEditLabel
@@ -168,7 +168,7 @@ namespace NelderMeadMethod {
 			this->XnEditLabel->AutoSize = true;
 			this->XnEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->XnEditLabel->Location = System::Drawing::Point(106, 179);
+			this->XnEditLabel->Location = System::Drawing::Point(103, 133);
 			this->XnEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->XnEditLabel->Name = L"XnEditLabel";
 			this->XnEditLabel->Size = System::Drawing::Size(44, 18);
@@ -192,7 +192,7 @@ namespace NelderMeadMethod {
 			this->alphaEditLabel->AutoSize = true;
 			this->alphaEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->alphaEditLabel->Location = System::Drawing::Point(434, 108);
+			this->alphaEditLabel->Location = System::Drawing::Point(431, 73);
 			this->alphaEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->alphaEditLabel->Name = L"alphaEditLabel";
 			this->alphaEditLabel->Size = System::Drawing::Size(44, 18);
@@ -204,7 +204,7 @@ namespace NelderMeadMethod {
 			this->betaEditLabel->AutoSize = true;
 			this->betaEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->betaEditLabel->Location = System::Drawing::Point(440, 143);
+			this->betaEditLabel->Location = System::Drawing::Point(440, 112);
 			this->betaEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->betaEditLabel->Name = L"betaEditLabel";
 			this->betaEditLabel->Size = System::Drawing::Size(38, 18);
@@ -216,7 +216,7 @@ namespace NelderMeadMethod {
 			this->gammaEditLabel->AutoSize = true;
 			this->gammaEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->gammaEditLabel->Location = System::Drawing::Point(416, 179);
+			this->gammaEditLabel->Location = System::Drawing::Point(416, 148);
 			this->gammaEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->gammaEditLabel->Name = L"gammaEditLabel";
 			this->gammaEditLabel->Size = System::Drawing::Size(62, 18);
@@ -228,7 +228,7 @@ namespace NelderMeadMethod {
 			this->tolEditLabel->AutoSize = true;
 			this->tolEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->tolEditLabel->Location = System::Drawing::Point(75, 253);
+			this->tolEditLabel->Location = System::Drawing::Point(75, 222);
 			this->tolEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->tolEditLabel->Name = L"tolEditLabel";
 			this->tolEditLabel->Size = System::Drawing::Size(74, 18);
@@ -240,7 +240,7 @@ namespace NelderMeadMethod {
 			this->iterLimEditLabel->AutoSize = true;
 			this->iterLimEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->iterLimEditLabel->Location = System::Drawing::Point(383, 253);
+			this->iterLimEditLabel->Location = System::Drawing::Point(383, 222);
 			this->iterLimEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->iterLimEditLabel->Name = L"iterLimEditLabel";
 			this->iterLimEditLabel->Size = System::Drawing::Size(95, 18);
@@ -252,7 +252,7 @@ namespace NelderMeadMethod {
 			this->timeLimEditLabel->AutoSize = true;
 			this->timeLimEditLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->timeLimEditLabel->Location = System::Drawing::Point(402, 217);
+			this->timeLimEditLabel->Location = System::Drawing::Point(402, 186);
 			this->timeLimEditLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->timeLimEditLabel->Name = L"timeLimEditLabel";
 			this->timeLimEditLabel->Size = System::Drawing::Size(76, 18);
@@ -278,7 +278,7 @@ namespace NelderMeadMethod {
 			// 
 			// alphaEditTextBox
 			// 
-			this->alphaEditTextBox->Location = System::Drawing::Point(499, 105);
+			this->alphaEditTextBox->Location = System::Drawing::Point(499, 73);
 			this->alphaEditTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->alphaEditTextBox->Name = L"alphaEditTextBox";
 			this->alphaEditTextBox->Size = System::Drawing::Size(175, 24);
@@ -288,7 +288,7 @@ namespace NelderMeadMethod {
 			// 
 			// betaEditTextBox
 			// 
-			this->betaEditTextBox->Location = System::Drawing::Point(499, 140);
+			this->betaEditTextBox->Location = System::Drawing::Point(499, 109);
 			this->betaEditTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->betaEditTextBox->Name = L"betaEditTextBox";
 			this->betaEditTextBox->Size = System::Drawing::Size(175, 24);
@@ -298,7 +298,7 @@ namespace NelderMeadMethod {
 			// 
 			// gammaEditTextBox
 			// 
-			this->gammaEditTextBox->Location = System::Drawing::Point(499, 176);
+			this->gammaEditTextBox->Location = System::Drawing::Point(499, 145);
 			this->gammaEditTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->gammaEditTextBox->Name = L"gammaEditTextBox";
 			this->gammaEditTextBox->Size = System::Drawing::Size(175, 24);
@@ -308,16 +308,16 @@ namespace NelderMeadMethod {
 			// 
 			// tolEditTextBox
 			// 
-			this->tolEditTextBox->Location = System::Drawing::Point(165, 250);
+			this->tolEditTextBox->Location = System::Drawing::Point(165, 219);
 			this->tolEditTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->tolEditTextBox->Name = L"tolEditTextBox";
 			this->tolEditTextBox->Size = System::Drawing::Size(196, 24);
 			this->tolEditTextBox->TabIndex = 9;
-			this->tolEditTextBox->Text = L"1e-28";
+			this->tolEditTextBox->Text = L"1e-16";
 			// 
 			// iterLimTextBox
 			// 
-			this->iterLimTextBox->Location = System::Drawing::Point(499, 250);
+			this->iterLimTextBox->Location = System::Drawing::Point(499, 219);
 			this->iterLimTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->iterLimTextBox->Name = L"iterLimTextBox";
 			this->iterLimTextBox->Size = System::Drawing::Size(175, 24);
@@ -326,7 +326,7 @@ namespace NelderMeadMethod {
 			// 
 			// timeLimEditTextBox
 			// 
-			this->timeLimEditTextBox->Location = System::Drawing::Point(499, 214);
+			this->timeLimEditTextBox->Location = System::Drawing::Point(499, 183);
 			this->timeLimEditTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->timeLimEditTextBox->Name = L"timeLimEditTextBox";
 			this->timeLimEditTextBox->Size = System::Drawing::Size(175, 24);
@@ -335,7 +335,7 @@ namespace NelderMeadMethod {
 			// 
 			// functionResultTextBox
 			// 
-			this->functionResultTextBox->Location = System::Drawing::Point(165, 492);
+			this->functionResultTextBox->Location = System::Drawing::Point(165, 460);
 			this->functionResultTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->functionResultTextBox->Name = L"functionResultTextBox";
 			this->functionResultTextBox->ReadOnly = true;
@@ -347,7 +347,7 @@ namespace NelderMeadMethod {
 			this->xResultLabel->AutoSize = true;
 			this->xResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->xResultLabel->Location = System::Drawing::Point(123, 418);
+			this->xResultLabel->Location = System::Drawing::Point(123, 386);
 			this->xResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->xResultLabel->Name = L"xResultLabel";
 			this->xResultLabel->Size = System::Drawing::Size(24, 18);
@@ -359,7 +359,7 @@ namespace NelderMeadMethod {
 			this->functionResultLabel->AutoSize = true;
 			this->functionResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->functionResultLabel->Location = System::Drawing::Point(56, 495);
+			this->functionResultLabel->Location = System::Drawing::Point(56, 463);
 			this->functionResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->functionResultLabel->Name = L"functionResultLabel";
 			this->functionResultLabel->Size = System::Drawing::Size(91, 18);
@@ -371,7 +371,7 @@ namespace NelderMeadMethod {
 			this->sigmaResultLabel->AutoSize = true;
 			this->sigmaResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->sigmaResultLabel->Location = System::Drawing::Point(99, 527);
+			this->sigmaResultLabel->Location = System::Drawing::Point(99, 495);
 			this->sigmaResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->sigmaResultLabel->Name = L"sigmaResultLabel";
 			this->sigmaResultLabel->Size = System::Drawing::Size(50, 18);
@@ -383,7 +383,7 @@ namespace NelderMeadMethod {
 			this->iterResultLabel->AutoSize = true;
 			this->iterResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->iterResultLabel->Location = System::Drawing::Point(363, 418);
+			this->iterResultLabel->Location = System::Drawing::Point(363, 386);
 			this->iterResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->iterResultLabel->Name = L"iterResultLabel";
 			this->iterResultLabel->Size = System::Drawing::Size(129, 18);
@@ -392,7 +392,7 @@ namespace NelderMeadMethod {
 			// 
 			// sigmaResultTextBox
 			// 
-			this->sigmaResultTextBox->Location = System::Drawing::Point(165, 524);
+			this->sigmaResultTextBox->Location = System::Drawing::Point(165, 492);
 			this->sigmaResultTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->sigmaResultTextBox->Name = L"sigmaResultTextBox";
 			this->sigmaResultTextBox->ReadOnly = true;
@@ -401,7 +401,7 @@ namespace NelderMeadMethod {
 			// 
 			// iterResultTextBox
 			// 
-			this->iterResultTextBox->Location = System::Drawing::Point(499, 415);
+			this->iterResultTextBox->Location = System::Drawing::Point(499, 383);
 			this->iterResultTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->iterResultTextBox->Name = L"iterResultTextBox";
 			this->iterResultTextBox->ReadOnly = true;
@@ -410,7 +410,7 @@ namespace NelderMeadMethod {
 			// 
 			// timeResultTextBox
 			// 
-			this->timeResultTextBox->Location = System::Drawing::Point(499, 381);
+			this->timeResultTextBox->Location = System::Drawing::Point(499, 349);
 			this->timeResultTextBox->Margin = System::Windows::Forms::Padding(4);
 			this->timeResultTextBox->Name = L"timeResultTextBox";
 			this->timeResultTextBox->ReadOnly = true;
@@ -422,7 +422,7 @@ namespace NelderMeadMethod {
 			this->timeResultLabel->AutoSize = true;
 			this->timeResultLabel->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
-			this->timeResultLabel->Location = System::Drawing::Point(381, 384);
+			this->timeResultLabel->Location = System::Drawing::Point(381, 352);
 			this->timeResultLabel->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			this->timeResultLabel->Name = L"timeResultLabel";
 			this->timeResultLabel->Size = System::Drawing::Size(94, 18);
@@ -431,7 +431,7 @@ namespace NelderMeadMethod {
 			// 
 			// seachButton
 			// 
-			this->seachButton->Location = System::Drawing::Point(211, 328);
+			this->seachButton->Location = System::Drawing::Point(211, 296);
 			this->seachButton->Margin = System::Windows::Forms::Padding(4);
 			this->seachButton->Name = L"seachButton";
 			this->seachButton->Size = System::Drawing::Size(150, 39);
@@ -442,7 +442,7 @@ namespace NelderMeadMethod {
 			// 
 			// CleanButton
 			// 
-			this->CleanButton->Location = System::Drawing::Point(390, 328);
+			this->CleanButton->Location = System::Drawing::Point(390, 296);
 			this->CleanButton->Margin = System::Windows::Forms::Padding(4);
 			this->CleanButton->Name = L"CleanButton";
 			this->CleanButton->Size = System::Drawing::Size(120, 39);
@@ -454,7 +454,7 @@ namespace NelderMeadMethod {
 			// allXnSelectRadioButton
 			// 
 			this->allXnSelectRadioButton->AutoSize = true;
-			this->allXnSelectRadioButton->Location = System::Drawing::Point(528, 73);
+			this->allXnSelectRadioButton->Location = System::Drawing::Point(198, 185);
 			this->allXnSelectRadioButton->Name = L"allXnSelectRadioButton";
 			this->allXnSelectRadioButton->Size = System::Drawing::Size(41, 22);
 			this->allXnSelectRadioButton->TabIndex = 2;
@@ -466,7 +466,7 @@ namespace NelderMeadMethod {
 			// 
 			this->everyXnSelectRadioButton->AutoSize = true;
 			this->everyXnSelectRadioButton->Checked = true;
-			this->everyXnSelectRadioButton->Location = System::Drawing::Point(584, 73);
+			this->everyXnSelectRadioButton->Location = System::Drawing::Point(255, 185);
 			this->everyXnSelectRadioButton->Name = L"everyXnSelectRadioButton";
 			this->everyXnSelectRadioButton->Size = System::Drawing::Size(63, 22);
 			this->everyXnSelectRadioButton->TabIndex = 3;
@@ -475,79 +475,20 @@ namespace NelderMeadMethod {
 			this->everyXnSelectRadioButton->UseVisualStyleBackColor = true;
 			this->everyXnSelectRadioButton->CheckedChanged += gcnew System::EventHandler(this, &NelderMeadForm::everyXnSelectRadioButton_CheckedChanged);
 			// 
-			// XListView
-			// 
-			this->XListView->HideSelection = false;
-			this->XListView->Location = System::Drawing::Point(165, 143);
-			this->XListView->MultiSelect = false;
-			this->XListView->Name = L"XListView";
-			this->XListView->Size = System::Drawing::Size(196, 95);
-			this->XListView->TabIndex = 9;
-			this->XListView->UseCompatibleStateImageBehavior = false;
-			this->XListView->View = System::Windows::Forms::View::SmallIcon;
-			// 
-			// XTextbox
-			// 
-			this->XTextbox->Location = System::Drawing::Point(165, 73);
-			this->XTextbox->Name = L"XTextbox";
-			this->XTextbox->Size = System::Drawing::Size(196, 24);
-			this->XTextbox->TabIndex = 4;
-			// 
-			// AddXButton
-			// 
-			this->AddXButton->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->AddXButton->Location = System::Drawing::Point(188, 103);
-			this->AddXButton->Name = L"AddXButton";
-			this->AddXButton->Size = System::Drawing::Size(63, 29);
-			this->AddXButton->TabIndex = 5;
-			this->AddXButton->Text = L"Add";
-			this->AddXButton->UseVisualStyleBackColor = true;
-			this->AddXButton->Click += gcnew System::EventHandler(this, &NelderMeadForm::AddXButton_Click);
-			// 
-			// DelXButton
-			// 
-			this->DelXButton->Location = System::Drawing::Point(272, 103);
-			this->DelXButton->Name = L"DelXButton";
-			this->DelXButton->Size = System::Drawing::Size(63, 29);
-			this->DelXButton->TabIndex = 7;
-			this->DelXButton->Text = L"Del";
-			this->DelXButton->UseVisualStyleBackColor = true;
-			this->DelXButton->Click += gcnew System::EventHandler(this, &NelderMeadForm::DelXButton_Click);
-			// 
 			// XResultListview
 			// 
 			this->XResultListview->Activation = System::Windows::Forms::ItemActivation::OneClick;
 			this->XResultListview->HoverSelection = true;
-			this->XResultListview->Location = System::Drawing::Point(165, 381);
+			this->XResultListview->Location = System::Drawing::Point(165, 349);
 			this->XResultListview->Name = L"XResultListview";
 			this->XResultListview->Size = System::Drawing::Size(196, 97);
 			this->XResultListview->TabIndex = 8;
 			this->XResultListview->UseCompatibleStateImageBehavior = false;
 			this->XResultListview->View = System::Windows::Forms::View::SmallIcon;
 			// 
-			// XLabel
-			// 
-			this->XLabel->AutoSize = true;
-			this->XLabel->Location = System::Drawing::Point(110, 75);
-			this->XLabel->Name = L"XLabel";
-			this->XLabel->Size = System::Drawing::Size(44, 18);
-			this->XLabel->TabIndex = 1;
-			this->XLabel->Text = L"Xn(0)";
-			// 
-			// EditxLabel
-			// 
-			this->EditxLabel->AutoSize = true;
-			this->EditxLabel->Location = System::Drawing::Point(431, 75);
-			this->EditxLabel->Name = L"EditxLabel";
-			this->EditxLabel->RightToLeft = System::Windows::Forms::RightToLeft::Yes;
-			this->EditxLabel->Size = System::Drawing::Size(47, 18);
-			this->EditxLabel->TabIndex = 0;
-			this->EditxLabel->Text = L"Edit X";
-			// 
 			// progressBar1
 			// 
-			this->progressBar1->Location = System::Drawing::Point(211, 290);
+			this->progressBar1->Location = System::Drawing::Point(211, 258);
 			this->progressBar1->MarqueeAnimationSpeed = 0;
 			this->progressBar1->Name = L"progressBar1";
 			this->progressBar1->Size = System::Drawing::Size(385, 23);
@@ -561,19 +502,25 @@ namespace NelderMeadMethod {
 			this->backgroundWorker->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &NelderMeadForm::backgroundWorker_DoWork);
 			this->backgroundWorker->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &NelderMeadForm::backgroundWorker_RunWorkerComleted);
 			// 
+			// dataGridView1
+			// 
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->dataGridView1->Location = System::Drawing::Point(165, 73);
+			this->dataGridView1->Name = L"dataGridView1";
+			this->dataGridView1->Size = System::Drawing::Size(196, 97);
+			this->dataGridView1->TabIndex = 62;
+			this->dataGridView1->CellValueChanged += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &NelderMeadForm::dataGridView1_CellValueChanged);
+			// 
 			// NelderMeadForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(9, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(744, 587);
+			this->ClientSize = System::Drawing::Size(744, 549);
+			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->progressBar1);
-			this->Controls->Add(this->EditxLabel);
-			this->Controls->Add(this->XLabel);
 			this->Controls->Add(this->XResultListview);
-			this->Controls->Add(this->DelXButton);
-			this->Controls->Add(this->AddXButton);
-			this->Controls->Add(this->XTextbox);
-			this->Controls->Add(this->XListView);
 			this->Controls->Add(this->everyXnSelectRadioButton);
 			this->Controls->Add(this->allXnSelectRadioButton);
 			this->Controls->Add(this->CleanButton);
@@ -611,6 +558,7 @@ namespace NelderMeadMethod {
 			this->MinimizeBox = false;
 			this->Name = L"NelderMeadForm";
 			this->Text = L"NelderMeadForm";
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -620,12 +568,19 @@ namespace NelderMeadMethod {
 	private: System::Void focus(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void seachButton_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void CleanButton_Click(System::Object^  sender, System::EventArgs^  e);
-	private: System::Void AddXButton_Click(System::Object^ sender, System::EventArgs^ e);
-	private: System::Void DelXButton_Click(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void allXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
 	private: System::Void everyXnSelectRadioButton_CheckedChanged(System::Object^ sender, System::EventArgs^ e);
 	public: System::Void  Clear();
 	private: System::Void backgroundWorker_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e); 
 	private: System::Void backgroundWorker_RunWorkerComleted(System::Object^  sender, System::ComponentModel::RunWorkerCompletedEventArgs^  e);
+private: System::Void dataGridView1_CellValueChanged(System::Object^  sender, System::Windows::Forms::DataGridViewCellEventArgs^  e) {
+	try {
+		double data= Double::Parse(dataGridView1->Rows[e->RowIndex]->Cells[e->ColumnIndex]->Value->ToString());
+		editDataGrigView++;
+	}
+	catch (System::Exception^ err) {
+		MessageBox::Show(err->Message);
+		 }
+}
 };
 }
