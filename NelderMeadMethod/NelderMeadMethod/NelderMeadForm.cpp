@@ -187,7 +187,7 @@ System::Void NelderMeadMethod::NelderMeadForm::backgroundWorker_DoWork(System::O
 	try {
 		do {
 			neldearMead->Method();
-		} while (neldearMead->Epsilon() < neldearMead->tol && neldearMead->iter <neldearMead->iterlim && TimeSpan(DateTime::UtcNow - ds).Seconds<neldearMead->timelim);
+		} while (neldearMead->Epsilon() > neldearMead->tol && neldearMead->iter <neldearMead->iterlim && TimeSpan(DateTime::UtcNow - ds).Seconds<neldearMead->timelim);
 		cond = true;
 	}
 	catch (System::Exception^ err) {
